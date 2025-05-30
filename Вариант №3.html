@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Демонстрационный экзамен - Управление библиотекой</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Merriweather', serif;
+        }
+        
+        body {
+            background-color: #F8F5F1;
+            color: #3A3A3C;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #8C9EAD 0%, #5D7B9D 100%);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            color: white;
+        }
+        
+        h1 {
+            color: #FFFFFF;
+            font-size: 32px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+        
+        h2 {
+            color: #3A5F8A;
+            border-bottom: 3px solid #8C9EAD;
+            padding-bottom: 10px;
+            margin: 30px 0 20px;
+            font-size: 26px;
+        }
+        
+        h3 {
+            color: #2C4A6B;
+            margin: 25px 0 15px;
+            font-size: 22px;
+            padding-left: 12px;
+            border-left: 4px solid #5D7B9D;
+        }
+        
+        .exam-info {
+            background: #E6EEF5;
+            border-left: 4px solid #5D7B9D;
+            padding: 18px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .module {
+            background: #FFFFFF;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            border: 1px solid #D8E1EA;
+        }
+        
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #5D7B9D, #3A5F8A);
+            padding: 14px 20px;
+            border-radius: 8px;
+            color: white;
+        }
+        
+        .module-title {
+            font-weight: bold;
+            font-size: 20px;
+            letter-spacing: 0.5px;
+        }
+        
+        .module-duration {
+            background: #2C4A6B;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .task {
+            margin: 20px 0;
+            padding: 20px;
+            background: #F8F9FB;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .requirements {
+            margin: 18px 0;
+            padding-left: 25px;
+        }
+        
+        .requirements li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .requirements li:before {
+            content: "▹";
+            color: #5D7B9D;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        .appendix {
+            background: #EDF4FC;
+            border: 2px solid #C2D4E8;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+        
+        .appendix h3 {
+            color: #2C4A6B;
+            text-align: center;
+            margin-top: 0;
+            border: none;
+            padding: 0;
+            font-size: 24px;
+        }
+        
+        .color-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .color-table th, .color-table td {
+            padding: 14px;
+            text-align: center;
+            border: 1px solid #D1DDE9;
+        }
+        
+        .color-table th {
+            background-color: #3A5F8A;
+            color: white;
+            font-size: 18px;
+        }
+        
+        .color-sample {
+            height: 50px;
+            border-radius: 6px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            margin: 10px auto;
+            width: 90%;
+        }
+        
+        .resources {
+            background: #E6F0FA;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 35px;
+            border: 2px dashed #A3C1E0;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 45px;
+            padding: 25px;
+            color: #3A5F8A;
+            font-weight: bold;
+            border-top: 3px solid #8C9EAD;
+            background: #F0F5FC;
+            border-radius: 10px;
+            font-size: 18px;
+        }
+        
+        code {
+            background: #E9F0F7;
+            padding: 3px 8px;
+            border-radius: 4px;
+            border: 1px solid #C7D6E5;
+            font-family: 'Courier New', monospace;
+            color: #2C4A6B;
+            font-weight: 600;
+        }
+        
+        strong {
+            color: #3A5F8A;
+        }
+        
+        .note {
+            background: #FFF9E6;
+            border-left: 4px solid #FFD700;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+            font-style: italic;
+        }
+        
+        @media print {
+            body {
+                padding: 10px;
+                font-size: 14px;
+            }
+            
+            .module, .appendix, .resources {
+                page-break-inside: avoid;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            h2 {
+                font-size: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .module-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .module-duration {
+                margin-top: 12px;
+            }
+            
+            h1 {
+                font-size: 28px;
+            }
+            
+            h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Задание демонстрационного экзамена</h1>
+        <p>(2025 год)</p>
+    </header>
+
+    <h2>Вариант № 3</h2>
+    
+    <div class="module">
+        <div class="module-header">
+            <div class="module-title">Модуль № 1: Разработка, администрирование и защита баз данных</div>
+        </div>
+        
+        <div class="task">
+            <h3>Задание:</h3>
+            <p>Центральная городская библиотека им. А.С. Пушкина содержит обширный фонд книг различных жанров и авторов. Для эффективного управления фондом и обслуживания читателей важно иметь актуальную информацию о наличии книг, их состоянии и авторах.</p>
+            
+            <p>Разработать подсистему для работы с книгами и авторами, обеспечивающую следующий функционал:</p>
+            <ul class="requirements">
+                <li>Просмотр списка книг</li>
+                <li>Добавление/редактирование данных о книгах</li>
+                <li>Просмотр списка авторов</li>
+                <li>Учет связи книг с авторами</li>
+            </ul>
+            
+            <p>На основе описания предметной области (Приложение 1) необходимо создать базу данных в выбранной СУБД для разрабатываемой системы. Обязательна <strong>3 нормальная форма</strong> с обеспечением ссылочной целостности. При разработке базы данных обратить внимание на согласованную схему именования, создать необходимые первичные и внешние ключи.</p>
+            
+            <p><strong>На данном этапе достаточно создать таблицы, поля и связи, относящиеся к разрабатываемой подсистеме (книги, авторы, связь книг и авторов).</strong></p>
+            
+            <div class="note">
+                <strong>Примечание:</strong> Одна книга может иметь несколько авторов (соавторство), и один автор может быть связан с несколькими книгами.
+            </div>
+            
+            <h3>Требования к результатам Модуля 1:</h3>
+            <ol class="requirements">
+                <li><strong>Импорт данных:</strong> Заказчик системы предоставил файлы с данными (с пометкой <code>import</code> в ресурсах) для переноса в новую систему. Необходимо подготовить данные файлов для импорта и загрузить в разработанную базу данных.</li>
+                <li><strong>Скрипт БД:</strong> Сохранить полученные результаты: создать SQL-скрипт, содержащий DDL (создание структуры: таблиц, ключей) и DML (импортированные данные) для воссоздания базы данных. Скрипт должен быть исполняемым.</li>
+            </ol>
+        </div>
+    </div>
+    
+    <div class="module">
+        <div class="module-header">
+            <div class="module-title">Модуль № 2: Разработка модулей программного обеспечения для компьютерных систем</div>
+        </div>
+        
+        <div class="task">
+            <h3>Задание:</h3>
+            <p>Сформировать алгоритм подсистемы для работы с книгами библиотеки. Разработать алгоритм функции определения книг, требующих восстановления или замены.</p>
+            
+            <p>Алгоритмы реализовать в виде кода программного продукта средствами любой среды разработки и языка программирования из доступных (например, C#, Java, Python).</p>
+            
+            <h3>Требования к интерфейсу и оформлению:</h3>
+            <ul class="requirements">
+                <li>Компоненты системы должны иметь единый согласованный внешний вид, соответствующий руководству по стилю (Приложение 2).</li>
+                <li>Заголовок главного окна (страницы) должен соответствовать назначению (например, "Учет книг - Библиотека им. Пушкина").</li>
+                <li>Установить иконку приложения (предоставлена в ресурсах), если это реализуемо в рамках платформы.</li>
+                <li>Разместить логотип библиотеки (предоставлен в ресурсах) на главной форме. Логотип не искажать.</li>
+                <li>Использовать шрифт <code>Merriweather</code>.</li>
+                <li>Цветовая схема:
+                    <ul>
+                        <li>Основной фон: <code>#F8F5F1</code> (Светло-бежевый)</li>
+                        <li>Дополнительный фон: <code>#8C9EAD</code> (Серо-голубой)</li>
+                        <li>Акцентирование внимания: <code>#3A5F8A</code> (Темно-синий)</li>
+                    </ul>
+                </li>
+            </ul>
+            
+            <h3>Требования к коду:</h3>
+            <ul class="requirements">
+                <li>Идентификаторы (имена переменных, функций, классов) должны отражать их назначение.</li>
+                <li>Соблюдать соглашения об именовании:
+                    <ul>
+                        <li><code>CamelCase</code> (для C# и Java)</li>
+                        <li><code>snake_case</code> (для Python)</li>
+                    </ul>
+                </li>
+                <li>Допустимо использование не более одной команды в строке.</li>
+                <li>Код должен быть хорошо документирован комментариями.</li>
+            </ul>
+            
+            <h3>Функциональные требования к модулю:</h3>
+            <ol class="requirements">
+                <li><strong>Вывод списка книг:</strong> Разработать программный модуль (главную форму/окно) для учета книг. Реализовать вывод списка книг, хранящихся в базе данных, согласно следующему описанию:
+                    <ul>
+                        <li>Отображать таблицу/список со столбцами: <code>Название книги</code>, <code>Автор(ы)</code>, <code>Жанр</code>, <code>Год издания</code>, <code>Состояние</code>, <code>Статус</code>, <code>Оценка износа</code>, <code>Требуется замена</code>.</li>
+                        <li>Предусмотреть возможность сортировки по любому столбцу (опционально, но желательно).</li>
+                    </ul>
+                </li>
+                <li><strong>Определение книг, требующих восстановления:</strong> Для каждой книги в столбце <code>Требуется замена</code> необходимо выводить соответствующее значение.
+                    <ul>
+                        <li><strong>Алгоритм расчета:</strong>
+                            <ol>
+                                <li>Если <code>Состояние = 'Отличное'</code>: Требуется замена = "Нет"</li>
+                                <li>Если <code>Состояние = 'Хорошее'</code> и <code>Оценка износа &lt; 60</code>: Требуется замена = "Нет"</li>
+                                <li>Если <code>Состояние = 'Хорошее'</code> и <code>Оценка износа &gt;= 60</code>: Требуется замена = "Восстановление"</li>
+                                <li>Если <code>Состояние = 'Удовлетворительное'</code>: Требуется замена = "Восстановление"</li>
+                                <li>Если <code>Состояние = 'Плохое'</code> или <code>Оценка износа &gt;= 80</code>: Требуется замена = "Замена"</li>
+                                <li>Если <code>Статус = 'Утеряна'</code>: Требуется замена = "Замена"</li>
+                            </ol>
+                        </li>
+                        <li>Значение должно отображаться в соответствующем столбце.</li>
+                    </ul>
+                </li>
+                <li><strong>Подключение БД:</strong> Созданную на Модуле 1 базу данных подключить к данному приложению. Список книг на главной форме должен отображать актуальные данные из БД.</li>
+                <li><strong>Отладка и тестирование:</strong> Выполнить отладку и тестирование модуля для проверки функциональности. Приложение должно:
+                    <ul>
+                        <li>Корректно запускаться и закрываться.</li>
+                        <li>Корректно отображать данные из БД.</li>
+                        <li>Корректно определять необходимость восстановления/замены для всех книг в списке.</li>
+                        <li>Не завершаться аварийно при стандартных операциях.</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+    </div>
+    
+    <h2>Необходимые приложения</h2>
+    
+    <div class="appendix">
+        <h3>Приложение 1: Описание предметной области (Управление библиотекой)</h3>
+        <p><strong>Описание предметной области</strong></p>
+        
+        <p>Центральная городская библиотека им. А.С. Пушкина обслуживает более 50 000 читателей и содержит фонд из более чем 200 000 книг. Библиотека предоставляет услуги выдачи книг на дом, читальные залы, электронный каталог и мероприятия.</p>
+        
+        <p>Разрабатываемая система включает подсистемы:</p>
+        <ul>
+            <li>Учет книг и фондов</li>
+            <li>Управление авторами</li>
+            <li>Обслуживание читателей</li>
+            <li>Учет выдачи и возврата книг</li>
+            <li>Управление филиалами</li>
+        </ul>
+        
+        <h4>Основные составляющие предметной области:</h4>
+        
+        <p><strong>1. Книги:</strong> ISBN, Название, Жанр, Год издания, Издательство, Количество страниц, Аннотация, Язык, Состояние (Отличное, Хорошее, Удовлетворительное, Плохое), Статус (В фонде, Выдана, На реставрации, Утеряна), Оценка износа (0-100%), Дата поступления, Стоимость, Расположение (стеллаж, полка).</p>
+        
+        <p><strong>2. Авторы:</strong> ФИО, Дата рождения, Дата смерти (если применимо), Страна, Биография, Основные жанры, Фотография.</p>
+        
+        <p><strong>3. Читатели:</strong> ФИО, Номер читательского билета, Адрес, Телефон, Email, Дата регистрации, Категория (взрослый, ребенок, пенсионер, студент).</p>
+        
+        <p><strong>4. Выдача книг:</strong> Читатель, Книга, Дата выдачи, Планируемая дата возврата, Фактическая дата возврата, Статус (активна, возвращена, просрочена), Штраф (если применимо).</p>
+        
+        <p><strong>5. Библиотекари:</strong> ФИО, Должность, Контактные данные, График работы, Филиал.</p>
+        
+        <p><strong>6. Филиалы библиотеки:</strong> Название, Адрес, Телефон, Режим работы, Заведующий, Количество книг в фонде.</p>
+        
+        <p><strong>7. Жанры:</strong> Название жанра, Описание, Количество книг в данном жанре.</p>
+        
+        <p><strong>8. Восстановление книг:</strong> Книга, Причина восстановления, Дата принятия в работу, Дата завершения, Стоимость работ, Исполнитель, Статус.</p>
+    </div>
+    
+    <div class="appendix">
+        <h3>Приложение 2: Руководство по стилю</h3>
+        
+        <p>Все экранные формы пользовательского интерфейса должны иметь заголовок. На главной форме должен быть установлен логотип библиотеки (представлен в ресурсах). Логотип не искажать: не менять изображение, пропорции изображения, цвет.</p>
+        
+        <p>Для приложения должна быть установлена иконка (дана в ресурсах), если это реализуемо в рамках платформы.</p>
+        
+        <p>Использовать шрифт <code>Merriweather</code>.</p>
+        
+        <p>Цветовая схема:</p>
+        
+        <table class="color-table">
+            <tr>
+                <th>Основной фон</th>
+                <th>Дополнительный фон</th>
+                <th>Акцентирование внимания</th>
+            </tr>
+            <tr>
+                <td style="background-color: #F8F5F1;">
+                    <div class="color-sample" style="background-color: #F8F5F1;"></div>
+                    #F8F5F1
+                </td>
+                <td style="background-color: #8C9EAD;">
+                    <div class="color-sample" style="background-color: #8C9EAD;"></div>
+                    #8C9EAD
+                </td>
+                <td style="background-color: #3A5F8A; color: white;">
+                    <div class="color-sample" style="background-color: #3A5F8A;"></div>
+                    #3A5F8A
+                </td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="resources">
+        <h3>Ресурсы (для предоставления студенту):</h3>
+        <ul>
+            <li>Файлы с данными для импорта в БД:
+                <ul>
+                    <li><code>import_books.txt</code> (список книг)</li>
+                    <li><code>import_authors.txt</code> (список авторов)</li>
+                    <li><code>import_book_author.txt</code> (связи книг и авторов)</li>
+                </ul>
+            </li>
+            <li>Логотип библиотеки (файл изображения): <code>library_logo.png</code></li>
+            <li>Иконка приложения (файл изображения): <code>book_icon.ico</code></li>
+        </ul>
+    </div>
+    
+    <div class="footer">
+            <p>Алмаз Артурович by deepseek</p>
+            <p>2025 год</p>
+        </div>
+</body>
+</html>
